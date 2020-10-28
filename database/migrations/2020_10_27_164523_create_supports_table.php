@@ -15,6 +15,16 @@ class CreateSupportsTable extends Migration
     {
         Schema::create('supports', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('type');
+            $table->string('file');
+            $table->integer('order');
+            $table->unsignedBigInteger('lesson_id');
+
+            $table->foreign('lesson_id')->references('id')->on('lessons');
+
             $table->timestamps();
         });
     }

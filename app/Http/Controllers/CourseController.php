@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Http\Requests\CourseStoreRequest;
+use App\Http\Requests\CourseUpdateRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -14,7 +17,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        //
+        $cursos = Course::orderBy('order', 'ASC')->get();
+
+        return view('admin.cursos.index', compact('cursos'));
     }
 
     /**
@@ -24,7 +29,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.cursos.create');
     }
 
     /**
@@ -33,9 +38,12 @@ class CourseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CourseStoreRequest $request)
     {
-        //
+        $request['slug'] = Str::slug($request['name']);
+        $curso = Course::create($request->all());
+
+        return redirect('/admin/cursos')->with('mensaje', 'Curso guardado con exito.');
     }
 
     /**
@@ -44,9 +52,11 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show($id)
     {
-        //
+        $curso = Course::find($id);
+
+        return view('admin.cursos.show', compact('curso'));
     }
 
     /**
@@ -55,9 +65,11 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function edit(Course $course)
+    public function edit($id)
     {
-        //
+        $curso = Course::findOrFail($id);
+
+        return view('admin.cursos.edit', compact('curso'));
     }
 
     /**
@@ -67,9 +79,13 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(CourseUpdateRequest $request, $id)
     {
-        //
+        $curso = Course::find($id);
+
+        $curso->fill($request->all())->save();
+
+        return redirect('/admin/cursos')->with('mensaje', 'Curso modificado con exito.');
     }
 
     /**
@@ -78,8 +94,11 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course)
+    public function destroy($id)
     {
-        //
+        $curso = Course::find($id);
+        $curso->delete();
+
+        return back()->with('mensaje', 'Curso borrado con exito.');
     }
 }
