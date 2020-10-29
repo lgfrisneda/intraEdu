@@ -7,7 +7,7 @@
             <a href="{{ url('/cursos/'.$curso->id) }}"><i class="fas fa-arrow-left"></i></a>
             <div class="card">
                 <div class="card-header">
-                    Editar curso - {{ $curso->name }}
+                    Agregar unidad a curso -> {{ $curso->name }}
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -19,10 +19,9 @@
                     </div>
                 @endif
                 <div class="card-body">
-                    <form action="{{ url('/cursos/'.$curso->id) }}" method="post">
-                    @method('PUT')
-                    @csrf
-                    @include('admin.cursos.partials.form')
+                    <form action="{{ url('/unidades') }}" method="post">
+                        @csrf
+                        @include('admin.unidades.partials.form')
 
                     </form>
                 </div>

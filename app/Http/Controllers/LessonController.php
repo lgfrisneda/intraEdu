@@ -3,28 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Lesson;
+use App\Course;
+use App\Http\Requests\LessonStoreRequest;
+use App\Http\Requests\LessonUpdateRequest;
+use App\Support;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class LessonController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Course $curso)
     {
-        //
+        return view('admin.unidades.create', compact('curso'));
     }
 
     /**
@@ -33,9 +28,13 @@ class LessonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(LessonStoreRequest $request)
     {
-        //
+        $request['slug'] = Str::slug($request['name']);
+
+        $unidad = Lesson::create($request->all());
+
+        return redirect('/unidades/'.$unidad->id)->with('mensaje', 'Unidad guardada con exito.');
     }
 
     /**
@@ -44,9 +43,12 @@ class LessonController extends Controller
      * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function show(Lesson $lesson)
+    public function show($id)
     {
-        //
+        $unidad = Lesson::findOrFail($id);
+        $soportes = Support::where('lesson_id', $unidad->id)->get();
+
+        return view('admin.unidades.show', compact('unidad', 'soportes'));
     }
 
     /**
@@ -55,9 +57,11 @@ class LessonController extends Controller
      * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function edit(Lesson $lesson)
+    public function edit($id)
     {
-        //
+        $unidad = Lesson::find($id);
+
+        return view('admin.unidades.edit', compact('unidad'));
     }
 
     /**
@@ -67,9 +71,13 @@ class LessonController extends Controller
      * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Lesson $lesson)
+    public function update(LessonUpdateRequest $request, $id)
     {
-        //
+        $unidad = Lesson::find($id);
+
+        $unidad->fill($request->all())->save();
+
+        return redirect('/unidades/'.$unidad->id)->with('mensaje', 'Unidad modificada con exito.');
     }
 
     /**
@@ -78,8 +86,11 @@ class LessonController extends Controller
      * @param  \App\Lesson  $lesson
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Lesson $lesson)
+    public function destroy($id)
     {
-        //
+        $unidad = Lesson::find($id);
+        $unidad->delete();
+
+        return redirect('/cursos/'.$unidad->course_id)->with('mensaje', 'Unidad borrada con exito.');
     }
 }

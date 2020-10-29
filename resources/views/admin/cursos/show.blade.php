@@ -4,13 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ url('/admin/cursos') }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ url('/cursos') }}"><i class="fas fa-arrow-left"></i></a>
             <div class="card">
                 <div class="card-header">
                     <h4 class="font-weight-bold">{{ $curso->name }}
                         <div class="float-right">
-                            <a href="{{ url('admin/cursos/'.$curso->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                            <form method="post" action="{{ url('admin/cursos/'.$curso->id) }}" style="display:inline;">
+                            <a href="{{ url('/cursos/'.$curso->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                            <form method="post" action="{{ url('/cursos/'.$curso->id) }}" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Seguro que desea borrar el curso {{ $curso->name }}?');"><i class="fas fa-trash"></i></button>
@@ -30,41 +30,16 @@
                             <p class="card-text">{!! $curso->syllabus !!}</p>
                         </div>
                         <div class="col-sm-4">
-                            <h5 class="card-title font-weight-bold text-center">Unidades</h5>
+                            <h5 class="card-title font-weight-bold text-center">
+                                Unidades
+                                <a href="{{ url('/unidades/create/'.$curso->id) }}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i></a>
+                            </h5>
                             <div class="list-group mb-2">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
+                                @foreach ($unidades as $unidad)
+                                <a href="{{ url('/unidades/'.$unidad->id) }}" class="list-group-item list-group-item-action">
+                                    {{ $loop->iteration }}. {{ $unidad->name }}
                                 </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    #. Titulo de unidad
-                                </a>
+                                @endforeach
                             </div>
                         </div>
                     </div>

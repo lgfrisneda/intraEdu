@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
+use App\Lesson;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class CourseController extends Controller
@@ -43,7 +45,7 @@ class CourseController extends Controller
         $request['slug'] = Str::slug($request['name']);
         $curso = Course::create($request->all());
 
-        return redirect('/admin/cursos')->with('mensaje', 'Curso guardado con exito.');
+        return redirect('/cursos/'.$curso->id)->with('mensaje', 'Curso guardado con exito.');
     }
 
     /**
@@ -55,8 +57,9 @@ class CourseController extends Controller
     public function show($id)
     {
         $curso = Course::find($id);
+        $unidades = Lesson::where('course_id', $id)->orderBy('order', 'ASC')->get();
 
-        return view('admin.cursos.show', compact('curso'));
+        return view('admin.cursos.show', compact('curso', 'unidades'));
     }
 
     /**
@@ -85,7 +88,7 @@ class CourseController extends Controller
 
         $curso->fill($request->all())->save();
 
-        return redirect('/admin/cursos')->with('mensaje', 'Curso modificado con exito.');
+        return redirect('/cursos/'.$curso->id)->with('mensaje', 'Curso modificado con exito.');
     }
 
     /**
@@ -99,6 +102,6 @@ class CourseController extends Controller
         $curso = Course::find($id);
         $curso->delete();
 
-        return back()->with('mensaje', 'Curso borrado con exito.');
+        return Redirect('/cursos')->with('mensaje', 'Curso borrado con exito.');
     }
 }

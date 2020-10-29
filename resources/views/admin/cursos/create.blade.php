@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <a href="{{ url('/admin/cursos') }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ url('/cursos') }}"><i class="fas fa-arrow-left"></i></a>
             <div class="card">
                 <div class="card-header">
                     Agregar curso
@@ -19,7 +19,7 @@
                     </div>
                 @endif
                 <div class="card-body">
-                    <form action="{{ url('/admin/cursos') }}" method="post">
+                    <form action="{{ url('/cursos') }}" method="post">
                         @csrf
                         @include('admin.cursos.partials.form')
 

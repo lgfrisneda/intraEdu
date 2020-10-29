@@ -17,7 +17,7 @@ class CreateLessonsTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
-            $table->string('description')->nullable();
+            $table->text('description');
             $table->string('slug');
             $table->integer('order');
             $table->unsignedBigInteger('course_id');
