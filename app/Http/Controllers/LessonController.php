@@ -46,9 +46,19 @@ class LessonController extends Controller
     public function show($id)
     {
         $unidad = Lesson::findOrFail($id);
-        $soportes = Support::where('lesson_id', $unidad->id)->get();
+        $video = Support::where('lesson_id', $unidad->id)
+                            ->where('type_support_id', 1)
+                            ->first();
 
-        return view('admin.unidades.show', compact('unidad', 'soportes'));
+        $archivos = Support::where('lesson_id', $unidad->id)
+                            ->where('type_support_id', 2)
+                            ->get();
+
+        $imagenes = Support::where('lesson_id', $unidad->id)
+                            ->where('type_support_id', 3)
+                            ->get();
+
+        return view('admin.unidades.show', compact('unidad', 'video', 'archivos', 'imagenes'));
     }
 
     /**

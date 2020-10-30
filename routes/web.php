@@ -27,3 +27,10 @@ Route::get('/unidades/{curso}', 'LessonController@show');
 Route::get('/unidades/{unidad}/edit', 'LessonController@edit');
 Route::put('/unidades/{unidad}', 'LessonController@update');
 Route::delete('/unidades/{unidad}', 'LessonController@destroy');
+
+Route::get('/soportes/{unidad}', 'SupportController@index');
+Route::get('/soportes/create/{unidad}', 'SupportController@create');
+Route::post('/soportes/{unidad}', 'SupportController@store');
+Route::get('/soportes/{material}/edit', 'SupportController@edit');
+Route::put('/soportes/{material}', 'SupportController@update');
+Route::delete('/soportes/{material}', 'SupportController@destroy');

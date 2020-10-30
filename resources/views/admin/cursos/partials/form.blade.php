@@ -1,4 +1,4 @@
-<script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>    
+<script src="https://cdn.ckeditor.com/4.15.0/basic/ckeditor.js"></script>    
     <div class="form-group">
         <label for="name">Nombre del curso</label>
         <input type="text" class="form-control" name="name" id="name" value="{{ isset($curso->name)? $curso->name: old('name') }}">

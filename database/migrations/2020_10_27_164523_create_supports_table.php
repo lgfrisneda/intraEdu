@@ -17,13 +17,19 @@ class CreateSupportsTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
-            $table->string('description')->nullable();
-            $table->string('type');
+            $table->text('description')->nullable();
+            $table->unsignedBigInteger('type_support_id');
             $table->string('file');
             $table->integer('order');
             $table->unsignedBigInteger('lesson_id');
 
-            $table->foreign('lesson_id')->references('id')->on('lessons');
+            $table->foreign('type_support_id')->references('id')->on('type_supports')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
+
+            $table->foreign('lesson_id')->references('id')->on('lessons')
+            ->onDelete('cascade')
+            ->onUpdate('cascade');
 
             $table->timestamps();
         });

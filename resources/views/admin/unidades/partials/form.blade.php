@@ -1,4 +1,4 @@
-<script src="https://cdn.ckeditor.com/4.15.0/standard/ckeditor.js"></script>    
+<script src="https://cdn.ckeditor.com/4.15.0/basic/ckeditor.js"></script>    
     <div class="form-group">
         <label for="name">Nombre de la unidad</label>
         <input type="text" class="form-control" name="name" id="name" value="{{ isset($unidad->name)? $unidad->name: old('name') }}">
