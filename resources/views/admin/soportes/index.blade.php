@@ -26,7 +26,7 @@
                         @foreach($soportes as $soporte)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td><span class="badge badge-{{ $soporte->type_support_id }}">{{ $soporte->type_support_id }}</span></td>
+                            <td width="25%"><span class="badge badge-{{ $soporte->type->badge }}">{{ $soporte->type->name }}</span></td>
                             <td>{{ $soporte->name }}</td>
                             <td>
                                 <a href="{{ url('/soportes/'.$soporte->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>

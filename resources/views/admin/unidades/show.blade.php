@@ -45,7 +45,7 @@
                 </div>
                 <div class="card-body">
                     <small class="text-muted">
-                        <cite title="Source Title">Curso: {{ $unidad->course_id }}</cite>
+                        <cite title="Source Title">Curso: {{ $unidad->course->name }}</cite>
                     </small>
                     <p class="card-text">{!! $unidad->description !!}</p>
                     <hr>

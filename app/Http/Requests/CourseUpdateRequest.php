@@ -25,7 +25,7 @@ class CourseUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'level' => 'required',
+            'level_id' => 'required',
             'order' => 'required'
         ];
     }

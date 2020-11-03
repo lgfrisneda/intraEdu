@@ -19,7 +19,7 @@ class SupportController extends Controller
      */
     public function index(Lesson $unidad)
     {
-        $soportes = Support::where('lesson_id', $unidad->id)->get();
+        $soportes = Support::where('lesson_id', $unidad->id)->with('lesson')->orderBy('type_support_id', 'ASC')->orderBy('order', 'ASC')->get();
 
         return view('admin.soportes.index', compact('soportes', 'unidad'));
     }

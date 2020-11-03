@@ -11,12 +11,11 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <label for="level">Nivel</label>
-                <select class="form-control" name="level" id="level">
+                <select class="form-control" name="level_id" id="level_id">
                     <option value="">Seleccione</option>
-                    <option value="Junior" {{ isset($curso->level) && $curso->level == 'Junior'? 'selected': '' }}>Junior</option>
-                    <option value="Medio" {{ isset($curso->level) && $curso->level == 'Medio'? 'selected': '' }}>Medio</option>
-                    <option value="Senior" {{ isset($curso->level) && $curso->level == 'Senior'? 'selected': '' }}>Senior</option>
-                    <option value="Personalizado" {{ isset($curso->level) && $curso->level == 'Personalizado'? 'selected': '' }}>Personalizado</option>
+                    @foreach($niveles as $nivel)
+                        <option value="{{ $nivel->id}}" {{ isset($curso->level_id) && $curso->level_id == $nivel->id? 'selected': '' }}>{{ $nivel->name}}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

@@ -13,21 +13,21 @@ class TypeSupportSeeder extends Seeder
     public function run()
     {
         TypeSupport::create([
-            'name' => 'Video',
+            'name' => 'VIDEO',
             'icon' => 'fas fa-film',
-            'badge' => 'primary'
-        ]);
-
-        TypeSupport::create([
-            'name' => 'Archivo PDF - POWERPOINT - OTROS',
-            'icon' => 'fas fa-paperclip',
-            'badge' => 'info'
-        ]);
-
-        TypeSupport::create([
-            'name' => 'Imágen',
-            'icon' => 'far fa-images',
             'badge' => 'warning'
+        ]);
+
+        TypeSupport::create([
+            'name' => 'ARCHIVO PDF - POWERPOINT - OTROS',
+            'icon' => 'fas fa-paperclip',
+            'badge' => 'secondary'
+        ]);
+
+        TypeSupport::create([
+            'name' => 'IMAGEN',
+            'icon' => 'far fa-images',
+            'badge' => 'primary'
         ]);
     }
 }

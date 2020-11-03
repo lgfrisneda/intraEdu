@@ -52,10 +52,12 @@ class LessonController extends Controller
 
         $archivos = Support::where('lesson_id', $unidad->id)
                             ->where('type_support_id', 2)
+                            ->orderBy('order', 'ASC')
                             ->get();
 
         $imagenes = Support::where('lesson_id', $unidad->id)
                             ->where('type_support_id', 3)
+                            ->orderBy('order', 'ASC')
                             ->get();
 
         return view('admin.unidades.show', compact('unidad', 'video', 'archivos', 'imagenes'));

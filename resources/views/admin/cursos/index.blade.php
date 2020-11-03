@@ -15,15 +15,15 @@
                     <div class="row row-cols-1 row-cols-md-3">
                         @foreach($cursos as $curso)
                         <div class="col mb-4">
-                            <a href="{{ url('/cursos/'.$curso->id) }}" class="card h-100">
-                                <!--<img src="..." class="card-img-top" alt="{{ $curso->slug }}">-->
-                                <div class="card-body">
+                            <div class="card h-100">
+                                <img src="https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_960_720.jpg" class="card-img-top" alt="{{ $curso->slug }}">
+                                <a href="{{ url('/cursos/'.$curso->id) }}" class="card-body">
                                     <h5 class="card-title">{{ $curso->name }}</h5>
+                                </a>
+                                <div class="card-footer bg-{{ $curso->level->bg_color }} text-center">
+                                    <small class="text-white font-weight-bold">{{ $curso->level->name }}</small>
                                 </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">{{ $curso->level }}</small>
-                                </div>
-                            </a>
+                            </div>
                         </div>
                         @endforeach
                     </div>

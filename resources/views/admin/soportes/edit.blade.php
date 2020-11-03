@@ -7,7 +7,7 @@
             <a href="{{ url('/soportes/'.$soporte->lesson_id) }}"><i class="fas fa-arrow-left"></i></a>
             <div class="card">
                 <div class="card-header">
-                    Editar soporte a unidad -> {{ $soporte->lesson_id }}
+                    Editar soporte a unidad -> {{ $soporte->lesson->name }}
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">

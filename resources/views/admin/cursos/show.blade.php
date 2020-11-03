@@ -22,7 +22,7 @@
                     <div class="row">
                         <div class="col-sm-8">
                             <small class="text-muted">
-                                <cite title="Source Title">Nivel: {{ $curso->level }}</cite>
+                                <cite title="Source Title">Nivel: {{ $curso->level->name }}</cite>
                             </small>
                             <p class="card-text">{!! $curso->description !!}</p>
                             <hr>

@@ -18,11 +18,13 @@ class CreateCoursesTable extends Migration
 
             $table->string('name');
             $table->text('description')->nullable();
-            $table->string('level');
+            $table->unsignedBigInteger('level_id');
             $table->string('slug');
             $table->integer('order');
             $table->text('syllabus')->nullable();
-            $table->string('file')->nullable();
+            $table->mediumText('file')->nullable();
+
+            $table->foreign('level_id')->references('id')->on('levels');
 
             $table->timestamps();
         });

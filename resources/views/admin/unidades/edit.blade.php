@@ -7,7 +7,7 @@
             <a href="{{ url('/unidades/'.$unidad->id) }}"><i class="fas fa-arrow-left"></i></a>
             <div class="card">
                 <div class="card-header">
-                    Editar unidad a curso -> {{ $unidad->course_id }}
+                    Editar unidad de curso -> {{ $unidad->course->name }}
                 </div>
                 @if ($errors->any())
                     <div class="alert alert-danger">

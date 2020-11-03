@@ -6,6 +6,7 @@ use App\Course;
 use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Lesson;
+use App\Level;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
@@ -31,7 +32,9 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('admin.cursos.create');
+        $niveles = Level::all();
+
+        return view('admin.cursos.create', compact('niveles'));
     }
 
     /**
@@ -71,8 +74,9 @@ class CourseController extends Controller
     public function edit($id)
     {
         $curso = Course::findOrFail($id);
+        $niveles = Level::all();
 
-        return view('admin.cursos.edit', compact('curso'));
+        return view('admin.cursos.edit', compact('curso', 'niveles'));
     }
 
     /**
