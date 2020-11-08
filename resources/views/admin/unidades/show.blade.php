@@ -34,12 +34,16 @@
                 <div class="card-header">
                     <h4 class="font-weight-bold">{{ $unidad->name }}
                         <div class="float-right">
-                            <a href="{{ url('/unidades/'.$unidad->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                            <form method="post" action="{{ url('/unidades/'.$unidad->id) }}" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Seguro que desea borrar la unidad {{ $unidad->name }} del curso {{ $unidad->course_id }}?');"><i class="fas fa-trash"></i></button>
-                            </form>
+                            @can('unidades.edit')
+                                <a href="{{ url('/unidades/'.$unidad->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                            @endcan
+                            @can('unidades.destroy')
+                                <form method="post" action="{{ url('/unidades/'.$unidad->id) }}" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Seguro que desea borrar la unidad {{ $unidad->name }} del curso {{ $unidad->course_id }}?');"><i class="fas fa-trash"></i></button>
+                                </form>
+                            @endcan
                         </div>
                     </h4>
                 </div>
@@ -51,7 +55,9 @@
                     <hr>
                     <h5 class="card-title font-weight-bold text-center mb-4">
                         Material
-                        <a href="{{ url('/soportes/'.$unidad->id) }}" class="btn btn-sm btn-secondary float-right"><i class="fas fa-list"></i></a>
+                        @can('soportes.index')
+                            <a href="{{ url('/soportes/'.$unidad->id) }}" class="btn btn-sm btn-secondary float-right"><i class="fas fa-list"></i></a>
+                        @endcan
                     </h5>
                     <h6 class="font-weight-bold">PDF - Power Point - otros</h6>
                     <div class="row mb-4">

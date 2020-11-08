@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:Admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -40,11 +44,13 @@ class UserController extends Controller
      */
     public function store(UserStoreRequest $request)
     {
-        User::create([
+        $usuario = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password'])
         ]);
+
+        $usuario->assignRole('Estudiante');
 
         return redirect('/usuarios')->with('mensaje', 'Usuario agregado con exito.');
     }

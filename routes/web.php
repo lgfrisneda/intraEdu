@@ -18,21 +18,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => ['auth']], function () {
+    //middleware por controlador
     Route::resource('/cursos', 'CourseController');
 
     Route::resource('/usuarios', 'UserController');
 
-    Route::get('/unidades/create/{curso}', 'LessonController@create');
-    Route::post('/unidades', 'LessonController@store');
-    Route::get('/unidades/{curso}', 'LessonController@show');
-    Route::get('/unidades/{unidad}/edit', 'LessonController@edit');
-    Route::put('/unidades/{unidad}', 'LessonController@update');
-    Route::delete('/unidades/{unidad}', 'LessonController@destroy');
+    //middleware por ruta
+    Route::get('/unidades/create/{curso}', 'LessonController@create')->middleware('permission:unidades.create');
+    Route::post('/unidades', 'LessonController@store')->middleware('permission:unidades.store');
+    Route::get('/unidades/{curso}', 'LessonController@show')->middleware('permission:unidades.show');
+    Route::get('/unidades/{unidad}/edit', 'LessonController@edit')->middleware('permission:unidades.edit');
+    Route::put('/unidades/{unidad}', 'LessonController@update')->middleware('permission:unidades.update');
+    Route::delete('/unidades/{unidad}', 'LessonController@destroy')->middleware('permission:unidades.destroy');
 
-    Route::get('/soportes/{unidad}', 'SupportController@index');
-    Route::get('/soportes/create/{unidad}', 'SupportController@create');
-    Route::post('/soportes/{unidad}', 'SupportController@store');
-    Route::get('/soportes/{material}/edit', 'SupportController@edit');
-    Route::put('/soportes/{material}', 'SupportController@update');
-    Route::delete('/soportes/{material}', 'SupportController@destroy');
+    Route::get('/soportes/{unidad}', 'SupportController@index')->middleware('permission:soportes.index');
+    Route::get('/soportes/create/{unidad}', 'SupportController@create')->middleware('permission:soportes.create');
+    Route::post('/soportes/{unidad}', 'SupportController@store')->middleware('permission:soportes.store');
+    Route::get('/soportes/{material}/edit', 'SupportController@edit')->middleware('permission:soportes.edit');
+    Route::put('/soportes/{material}', 'SupportController@update')->middleware('permission:soportes.update');
+    Route::delete('/soportes/{material}', 'SupportController@destroy')->middleware('permission:soportes.destroy');
 });

@@ -9,12 +9,16 @@
                 <div class="card-header">
                     <h4 class="font-weight-bold">{{ $curso->name }}
                         <div class="float-right">
-                            <a href="{{ url('/cursos/'.$curso->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
-                            <form method="post" action="{{ url('/cursos/'.$curso->id) }}" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Seguro que desea borrar el curso {{ $curso->name }}?');"><i class="fas fa-trash"></i></button>
-                            </form>
+                            @can('cursos.edit')
+                                <a href="{{ url('/cursos/'.$curso->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                            @endcan
+                            @can('cursos.destroy')
+                                <form method="post" action="{{ url('/cursos/'.$curso->id) }}" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Seguro que desea borrar el curso {{ $curso->name }}?');"><i class="fas fa-trash"></i></button>
+                                </form>
+                            @endcan
                         </div>
                     </h4>
                 </div>
@@ -32,7 +36,9 @@
                         <div class="col-sm-4">
                             <h5 class="card-title font-weight-bold text-center">
                                 Unidades
-                                <a href="{{ url('/unidades/create/'.$curso->id) }}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i></a>
+                                @can('unidades.create')
+                                    <a href="{{ url('/unidades/create/'.$curso->id) }}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i></a>
+                                @endcan
                             </h5>
                             <div class="list-group mb-2">
                                 @foreach ($unidades as $unidad)

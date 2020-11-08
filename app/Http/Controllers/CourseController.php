@@ -13,6 +13,12 @@ use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
+    public function __construct()
+    {
+        //solo los Admin pueden usar estos metodos, los demas son compartidos
+        $this->middleware('role:Admin')->only(['create', 'store', 'edit', 'update', 'destroy']);
+        $this->middleware('role:Admin|Estudiante')->only(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      *

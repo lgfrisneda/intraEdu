@@ -8,7 +8,9 @@
             <div class="card">
                 <div class="card-header">
                     Cursos
-                    <a href="{{ url('/cursos/create') }}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i></a>
+                    @can('cursos.create')
+                        <a href="{{ url('/cursos/create') }}" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i></a>
+                    @endcan
                 </div>
 
                 <div class="card-body">

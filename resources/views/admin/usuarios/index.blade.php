@@ -25,7 +25,7 @@
                         @foreach($usuarios as $usuario)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td width="25%"><span class="badge badge-primary">Rol</span></td>
+                            <td width="25%"><span class="badge badge-primary">{{ $usuario->getRoleNames() }}</span></td>
                             <td>{{ $usuario->name }}</td>
                             <td>
                                 <a href="{{ url('/usuarios/'.$usuario->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>

@@ -38,11 +38,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
+                    @can('usuarios.index')
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url('/usuarios') }}">Usuarios</a>
                         </li>
                     </ul>
+                    @endcan
                     @endauth
 
                     <!-- Right Side Of Navbar -->
