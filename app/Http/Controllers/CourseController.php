@@ -7,9 +7,11 @@ use App\Http\Requests\CourseStoreRequest;
 use App\Http\Requests\CourseUpdateRequest;
 use App\Lesson;
 use App\Level;
+use App\LevelUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -26,8 +28,14 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $cursos = Course::orderBy('order', 'ASC')->get();
-
+        $userAuth = Auth::user();
+        if($userAuth->hasRole('Estudiante')){
+            $levelUser = LevelUser::where('user_id', $userAuth->id)->pluck('level_id');
+            $cursos = Course::where('level_id', $levelUser)->orderBy('order', 'ASC')->paginate(9);
+        }else{
+            $cursos = Course::orderBy('order', 'ASC')->paginate(9);
+        }
+        
         return view('admin.cursos.index', compact('cursos'));
     }
 
@@ -65,8 +73,16 @@ class CourseController extends Controller
      */
     public function show($id)
     {
-        $curso = Course::find($id);
-        $unidades = Lesson::where('course_id', $id)->orderBy('order', 'ASC')->get();
+        $userAuth = Auth::user();
+        if($userAuth->hasRole('Estudiante')){
+            $levelUser = LevelUser::where('user_id', $userAuth->id)->pluck('level_id');
+            $curso = Course::where('id', $id)->where('level_id', $levelUser)->first();
+            $unidades = Lesson::where('course_id', $curso->id)->orderBy('order', 'ASC')->get();
+        }else{
+            $curso = Course::find($id);
+            $unidades = Lesson::where('course_id', $id)->orderBy('order', 'ASC')->get();
+        }
+        
 
         return view('admin.cursos.show', compact('curso', 'unidades'));
     }

@@ -14,10 +14,15 @@
                 <small id="passwordHelp" class="form-text text-muted">Minimo 8 caracteres, dejar vacio si no se desea modificar</small>
             </div>
         </div>
-        <div class="col-sm-6" style="display: none;">
+        <div class="col-sm-6">
             <div class="form-group">
-                <label for="name">Rol</label>
-                <input type="password" class="form-control" name="other" id="other" value="{{ isset($usuario->other)? $usuario->other: old('other') }}">
+                <label for="level">Nivel</label>
+                <select class="form-control" name="level_id" id="level_id">
+                    <option value="">Seleccione</option>
+                    @foreach($niveles as $nivel)
+                        <option value="{{ $nivel->id}}" {{ isset($nivelUsuario->level_id) && $nivelUsuario->level_id == $nivel->id? 'selected': '' }}>{{ $nivel->name}}</option>
+                    @endforeach
+                </select>
             </div>
         </div>
     </div>

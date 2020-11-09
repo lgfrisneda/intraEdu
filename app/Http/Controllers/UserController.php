@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Level;
+use App\LevelUser;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +35,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.usuarios.create');
+        $niveles = Level::all();
+
+        return view('admin.usuarios.create', compact('niveles'));
     }
 
     /**
@@ -48,6 +52,11 @@ class UserController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password'])
+        ]);
+
+        $nivelUsuario = LevelUser::create([
+            'level_id' => $request['level_id'],
+            'user_id' => $usuario->id
         ]);
 
         $usuario->assignRole('Estudiante');
@@ -76,7 +85,11 @@ class UserController extends Controller
     {
         $usuario = User::find($id);
 
-        return view('admin.usuarios.edit', compact('usuario'));
+        $niveles = Level::all();
+
+        $nivelUsuario = LevelUser::where('user_id', $usuario->id)->first();
+
+        return view('admin.usuarios.edit', compact('usuario', 'niveles', 'nivelUsuario'));
     }
 
     /**
@@ -89,8 +102,9 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, $id)
     {
         $usuario = User::find($id);
+        $nivelUsuario = LevelUser::where('user_id', $usuario->id)->first();
 
-        $datosUser = request()->except(['_method','_token']);
+        $datosUser = request()->except(['_method', '_token']);
 
         if(empty($request['password'])){
             $datosUser = request()->except(['password']);
@@ -99,6 +113,9 @@ class UserController extends Controller
         }
 
         $usuario->update($datosUser);
+        $nivelUsuario->update([
+            'level_id' => $datosUser['level_id']
+        ]);
 
         return redirect('/usuarios')->with('mensaje', 'Usuario modificado con exito.');
     }
