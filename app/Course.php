@@ -14,4 +14,11 @@ class Course extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function scopeName($query, $name)
+    {
+        if($name){
+            return $query->where('name', 'LIKE', "%$name%");
+        }
+    }
 }

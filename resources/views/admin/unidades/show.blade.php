@@ -24,9 +24,6 @@
                             <div class="card-body">
                                 <p class="card-text">{!! $video->description !!}</p>
                             </div>
-                            <div class="card-footer">
-                                <a href="#" class="btn btn-block btn-success">Siguiente unidad</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -34,6 +31,7 @@
                 <div class="card-header">
                     <h4 class="font-weight-bold">{{ $unidad->name }}
                         <div class="float-right">
+                            <a href="#" class="btn btn-sm btn-success">Siguiente unidad</a>
                             @can('unidades.edit')
                                 <a href="{{ url('/unidades/'.$unidad->id.'/edit') }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                             @endcan

@@ -26,14 +26,16 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->get('name');
+
         $userAuth = Auth::user();
         if($userAuth->hasRole('Estudiante')){
             $levelUser = LevelUser::where('user_id', $userAuth->id)->pluck('level_id');
-            $cursos = Course::where('level_id', $levelUser)->orderBy('order', 'ASC')->paginate(9);
+            $cursos = Course::where('level_id', $levelUser)->name($name)->orderBy('order', 'ASC')->paginate(9);
         }else{
-            $cursos = Course::orderBy('order', 'ASC')->paginate(9);
+            $cursos = Course::name($name)->orderBy('order', 'ASC')->paginate(9);
         }
         
         return view('admin.cursos.index', compact('cursos'));
